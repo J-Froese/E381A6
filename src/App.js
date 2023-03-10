@@ -4,7 +4,7 @@ import Note from "./components/Note.js"
 import CreateNote from "./components/CreateNote.js"
 
 function App() {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("Notes")));
   const [inputText, setInputText] = useState("");
   const [title, setTitle] = useState("");
   
@@ -36,17 +36,11 @@ function App() {
 	setTitle(tText);
 	setInputText(nText);
   };
-  
-  useEffect(() => {
-  	localStorage.setItem("Notes", JSON.stringify(notes));
-  }, [notes]);
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("Notes"));
-	if (data) {
-      setNotes(data);
-	}
-  }, []);
+	  console.log("2");
+    localStorage.setItem("Notes", JSON.stringify(notes));
+  }, [notes]);
 
   const useToggle = (initialState) => {
     const [toggleValue, setToggleValue] = useState(true);
@@ -59,18 +53,18 @@ function App() {
 
   return (
 	<>
-	  <section class="bar">
+	  <section className="bar">
 	    <div><h1>Lotion</h1></div>
-  	    <button class="bar" id="menu" onClick={setToggle}>{'\u2630'}</button>
+  	    <button className="bar" id="menu" onClick={setToggle}>{'\u2630'}</button>
 	  </section>
 	  <section id="page">
 	    {toggle && (
 		<div>
-	      <section class="bar">
+	      <section className="bar">
 		    <div><h1>Notes</h1></div>
 		    <button onClick={() => openNote("","")}>+</button>
 		  </section>
-		  <section class="list">
+		  <section className="list">
 		    {notes.map((note) => (
 			  <Note
 			    openNote={openNote}
